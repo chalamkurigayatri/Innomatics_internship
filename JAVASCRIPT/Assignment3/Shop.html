@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Discount Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url(Shop.jpg);
+      background-size: cover;
+    }
+
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #f6b336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3e8ce0;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Shopping Discount Calculator</h1>
+    <label for="orderAmount">Order Amount ($):</label>
+    <input type="number" id="orderAmount" placeholder="Enter your order amount">
+    <button onclick="calculateFinalAmount()">Calculate</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateFinalAmount() {
+      const orderAmount = parseFloat(document.getElementById("orderAmount").value);
+      let discount = 0;
+      let shippingCost = 0;
+
+      if (orderAmount > 1000) {
+        discount = orderAmount * 0.2; 
+      } else if (orderAmount >= 500) {
+        discount = orderAmount * 0.1; 
+      }
+
+      const discountedAmount = orderAmount - discount;
+
+      if (discountedAmount > 50) {
+        shippingCost = 0;
+      } else {
+        shippingCost = 10; 
+      }
+
+      const finalAmount = discountedAmount + shippingCost;
+
+      document.getElementById("result").innerText = `
+        Original Amount: $${orderAmount.toFixed(2)}
+        \nDiscount: $${discount.toFixed(2)}
+        \nShipping Cost: $${shippingCost.toFixed(2)}
+        \nFinal Payable Amount: $${finalAmount.toFixed(2)}
+      `;
+    }
+  </script>
+</body>
+</html>

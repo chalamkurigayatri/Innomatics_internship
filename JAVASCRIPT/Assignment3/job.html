@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Filter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url(job.jpg);
+      background-size: cover;
+    }
+
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #f8c40a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #187dea;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Job Application Filter</h1>
+    <label for="age">Enter Age:</label>
+    <input type="number" id="age" placeholder="Enter your age">
+    <label for="experience">Enter Experience (Years):</label>
+    <input type="number" id="experience" placeholder="Enter your experience">
+    <label for="qualification">Select Qualification:</label>
+    <select id="qualification">
+      <option value="High School">High School</option>
+      <option value="Diploma">Diploma</option>
+      <option value="Bachelor's Degree">Bachelor's Degree</option>
+      <option value="Master's Degree">Master's Degree</option>
+      <option value="PhD">PhD</option>
+    </select>
+    <button onclick="isEligibleForJob()">Check Eligibility</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function isEligibleForJob() {
+      const age = parseInt(document.getElementById("age").value);
+      const experience = parseInt(document.getElementById("experience").value);
+      const qualification = document.getElementById("qualification").value;
+
+      let isEligible = true;
+
+      if (age < 21 || age > 55) {
+        isEligible = false;
+      }
+      if (experience < 2) {
+        isEligible = false;
+      }
+      if (qualification !== "Bachelor's Degree" && qualification !== "Master's Degree" && qualification !== "PhD") {
+        isEligible = false;
+      }
+
+      const resultMessage = isEligible 
+        ? "You are eligible for the job!" 
+        : "You are not eligible for the job.";
+
+      document.getElementById("result").innerText = `
+        Age: ${age}
+        \nExperience: ${experience} years
+        \nQualification: ${qualification}
+        \nEligibility: ${resultMessage}
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM System</title>
+    <style>
+        body {
+            background-image: url(Atm.png);
+            background-size: cover;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .atm {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            height: 90%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #ff9d00;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0057b37a;
+        }
+
+        #message {
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="atm">
+        <h1>ATM System</h1>
+        <form id="atm-form">
+            <label for="balance">Balance:</label>
+            <input type="number" id="balance" value="5000" readonly>
+
+            <label for="pin">Enter PIN:</label>
+            <input type="password" id="pin" placeholder="Enter your PIN" required>
+
+            <label for="amount">Withdraw Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount (multiples of 100)">
+
+            <button type="button" onclick="Withdrawal()">Withdraw</button><br>
+            <button type="button" onclick="changePin()">Change PIN</button><br>
+            <button type="button" onclick="addAmount()">Add Amount</button><br>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        let balance = 5000;
+        let pin = "1234";
+
+        function Withdrawal() {
+            const enteredPin = document.getElementById("pin").value;
+            const amount = parseInt(document.getElementById("amount").value);
+            const message = document.getElementById("message");
+
+            if (enteredPin !== pin) {
+                message.textContent = "Incorrect PIN!";
+                message.style.color = "red";
+                message.style.backgroundColor="white";
+                return;
+            }
+
+            if (!amount || amount <= 0 || amount % 100 !== 0) {
+                message.textContent = "Enter a valid amount (multiples of 100)!";
+                message.style.color = "red";
+                message.style.backgroundColor="white";
+                return;
+            }
+
+            if (amount > balance) {
+                message.textContent = "Insufficient balance!";
+                message.style.color = "red";
+                message.style.backgroundColor="white";
+                return;
+            }
+
+            balance -= amount;
+            document.getElementById("balance").value = balance;
+            message.textContent = `Transaction successful! Withdrawn: ₹${amount}`;
+            message.style.color = "green";
+            message.style.backgroundColor="white";
+        }
+
+        function changePin() {
+            const currentPin = prompt("Enter your current PIN:");
+
+            if (currentPin !== pin) {
+                alert("Incorrect current PIN!");
+                return;
+            }
+
+            const newPin = prompt("Enter your new PIN:");
+            const confirmPin = prompt("Confirm your new PIN:");
+
+            if (newPin !== confirmPin || !newPin) {
+                alert("PINs do not match or invalid input!");
+                return;
+            }
+
+            pin = newPin;
+            alert("PIN changed successfully!");
+        }
+
+        function addAmount() {
+    const enteredPin = document.getElementById("pin").value;
+    const amount = parseInt(prompt("Enter the amount to add:"));
+    const message = document.getElementById("message");
+
+    if (enteredPin === "") {
+        message.textContent = "Please enter your PIN!";
+        message.style.color = "red";
+        message.style.backgroundColor="white";
+        return;
+    }
+
+    if (enteredPin !== pin) {
+        message.textContent = "Incorrect PIN!";
+        message.style.color = "red";
+        message.style.backgroundColor="white";
+        return;
+    }
+
+    if (!amount || amount <= 0) {
+        message.textContent = "Enter a valid amount!";
+        message.style.color = "red";
+        message.style.backgroundColor="white";
+        return;
+    }
+
+    balance += amount;
+    document.getElementById("balance").value = balance;
+    message.textContent = `Amount added successfully! New Balance: ₹${balance}`;
+    message.style.color = "green";
+    message.style.backgroundColor="white";
+}
+
+    </script>
+</body>
+</html>

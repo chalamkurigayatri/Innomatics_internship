@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness Membership Plan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url(fitness.jpg);
+      background-size: cover;
+    }
+
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #ffd519;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2581e3;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fitness Membership Plan</h1>
+    <p>Select your preferences:</p>
+    <label>
+      <input type="checkbox" id="wantsTrainer"> Personal Trainer
+    </label><br>
+    <label>
+      <input type="checkbox" id="wantsDietPlan"> Diet Plan
+    </label><br><br>
+    <button onclick="choosePlan()">Suggest Plan</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function choosePlan() {
+      const wantsTrainer = document.getElementById("wantsTrainer").checked;
+      const wantsDietPlan = document.getElementById("wantsDietPlan").checked;
+
+      let suggestedPlan = "Basic ($20/month) → Only gym access";
+
+      if (wantsTrainer && wantsDietPlan) {
+        suggestedPlan = "VIP ($80/month) → Gym + Trainer + Diet Plan";
+      } else if (wantsTrainer) {
+        suggestedPlan = "Premium ($50/month) → Gym + Personal Trainer";
+      }
+
+      document.getElementById("result").innerText = `Suggested Plan: ${suggestedPlan}`;
+    }
+  </script>
+</body>
+</html>

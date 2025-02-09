@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Ticket Pricing</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url(ticket.jpg);
+      background-size: cover;
+    }
+
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Movie Ticket Pricing</h1>
+    <label for="age">Enter Age:</label>
+    <input type="number" id="age" placeholder="Enter your age">
+    <label for="showTime">Select Show Time:</label>
+    <input type="time" id="showTime">
+    <button onclick="calculateTicketPrice()">Calculate Ticket Price</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateTicketPrice() {
+      const age = parseInt(document.getElementById("age").value);
+      const showTime = document.getElementById("showTime").value;
+
+      const standardPrice = 12;
+      let discount = 0;
+
+      // Check age-based discounts
+      if (age < 12) {
+        discount = 0.4; // 40% discount for children
+      } else if (age > 60) {
+        discount = 0.3; // 30% discount for senior citizens
+      }
+
+      // Check time-based discount
+      const [hours] = showTime.split(":").map(Number);
+      if (hours < 17) {
+        discount = Math.max(discount, 0.2); // 20% discount for matinee
+      }
+
+      const finalPrice = standardPrice * (1 - discount);
+
+      document.getElementById("result").innerText = `
+        Age: ${age}
+        \nShow Time: ${showTime}
+        \nFinal Ticket Price: $${finalPrice.toFixed(2)}
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Ticket Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url(flight.jpg);
+      background-size: cover;
+    }
+
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Flight Ticket Booking</h1>
+    <label for="classType">Select Class Type:</label>
+    <select id="classType">
+      <option value="economy">Economy</option>
+      <option value="business">Business (+$200)</option>
+      <option value="first">First Class (+$500)</option>
+    </select>
+
+    <label for="luggageWeight">Enter Luggage Weight (kg):</label>
+    <input type="number" id="luggageWeight" placeholder="Enter luggage weight">
+
+    <label>
+      <input type="checkbox" id="isStudent"> Are you a student? (15% discount)
+    </label><br>
+    <label>
+      <input type="checkbox" id="isSenior"> Are you a senior (above 60)? (10% discount)
+    </label><br><br>
+
+    <button onclick="calculateFlightFare()">Calculate Fare</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateFlightFare() {
+      const classType = document.getElementById("classType").value;
+      const luggageWeight = parseFloat(document.getElementById("luggageWeight").value) || 0;
+      const isStudent = document.getElementById("isStudent").checked;
+      const isSenior = document.getElementById("isSenior").checked;
+
+      const baseFare = 300;
+      let additionalCharges = 0;
+
+      // Additional charges based on class type
+      if (classType === "business") {
+        additionalCharges += 200;
+      } else if (classType === "first") {
+        additionalCharges += 500;
+      }
+
+      // Additional charges for luggage over 20kg
+      if (luggageWeight > 20) {
+        additionalCharges += Math.ceil((luggageWeight - 20) / 10) * 50;
+      }
+
+      let totalFare = baseFare + additionalCharges;
+
+      // Apply discounts
+      if (isStudent) {
+        totalFare *= 0.85; // 15% off
+      } else if (isSenior) {
+        totalFare *= 0.90; // 10% off
+      }
+
+      document.getElementById("result").innerText = `
+        Class Type: ${classType.charAt(0).toUpperCase() + classType.slice(1)}
+        \nLuggage Weight: ${luggageWeight} kg
+        \nBase Fare: $${baseFare}
+        \nAdditional Charges: $${additionalCharges}
+        \nTotal Fare: $${totalFare.toFixed(2)}
+      `;
+    }
+  </script>
+</body>
+</html>
